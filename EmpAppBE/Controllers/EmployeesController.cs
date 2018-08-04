@@ -17,7 +17,7 @@ namespace EmpAppBE.Controllers
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class EmployeesController : ApiController
     {
-        private EmpDBEntities db = new EmpDBEntities();
+        private Entities db = new Entities();
 
         // GET: api/Employees
         [Route("api/v1/employees")]

@@ -13,10 +13,10 @@ namespace EmpAppBE.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EmpDBEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public EmpDBEntities()
-            : base("name=EmpDBEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -26,5 +26,6 @@ namespace EmpAppBE.Models
         }
     
         public virtual DbSet<employee> employees { get; set; }
+        public virtual DbSet<employee_contact> employee_contact { get; set; }
     }
 }

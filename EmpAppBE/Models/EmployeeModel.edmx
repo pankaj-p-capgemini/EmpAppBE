@@ -15,8 +15,34 @@
           <Property Name="department" Type="varchar" MaxLength="30" />
           <Property Name="is_deleted" Type="varchar" MaxLength="1" />
         </EntityType>
+        <EntityType Name="employee_contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_employee_contact_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="employee_contact" Type="Self.employee_contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="employee_contact">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EmpDBModelStoreContainer">
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee_contact" EntityType="Self.employee_contact" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_employee_contact_employee" Association="Self.FK_employee_contact_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="employee_contact" EntitySet="employee_contact" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -32,16 +58,44 @@
           <Property Name="salary" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="department" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="is_deleted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employee_contact" Relationship="Self.FK_employee_contact_employee" FromRole="employee" ToRole="employee_contact" />
         </EntityType>
-        <EntityContainer Name="EmpDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="employee_contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_employee_contact_employee" FromRole="employee_contact" ToRole="employee" />
+        </EntityType>
+        <Association Name="FK_employee_contact_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="employee_contact" Type="Self.employee_contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="employee_contact">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="employee_contact" EntityType="Self.employee_contact" />
+          <AssociationSet Name="FK_employee_contact_employee" Association="Self.FK_employee_contact_employee">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="employee_contact" EntitySet="employee_contact" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EmpDBModelStoreContainer" CdmEntityContainer="EmpDBEntities">
+        <EntityContainerMapping StorageEntityContainer="EmpDBModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="employees">
             <EntityTypeMapping TypeName="EmpDBModel.employee">
               <MappingFragment StoreEntitySet="employee">
@@ -50,6 +104,16 @@
                 <ScalarProperty Name="salary" ColumnName="salary" />
                 <ScalarProperty Name="department" ColumnName="department" />
                 <ScalarProperty Name="is_deleted" ColumnName="is_deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee_contact">
+            <EntityTypeMapping TypeName="EmpDBModel.employee_contact">
+              <MappingFragment StoreEntitySet="employee_contact">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

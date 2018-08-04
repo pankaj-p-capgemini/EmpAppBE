@@ -10,7 +10,33 @@
     <Property Name="department" Type="varchar" MaxLength="30" />
     <Property Name="is_deleted" Type="varchar" MaxLength="1" />
   </EntityType>
+  <EntityType Name="employee_contact">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="mobile" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="emp_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_employee_contact_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="employee_contact" Type="Self.employee_contact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee_contact">
+        <PropertyRef Name="emp_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="EmpDBModelStoreContainer">
     <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee_contact" EntityType="Self.employee_contact" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_employee_contact_employee" Association="Self.FK_employee_contact_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="employee_contact" EntitySet="employee_contact" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

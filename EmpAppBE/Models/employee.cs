@@ -14,10 +14,19 @@ namespace EmpAppBE.Models
     
     public partial class employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public employee()
+        {
+            this.employee_contact = new HashSet<employee_contact>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public Nullable<decimal> salary { get; set; }
         public string department { get; set; }
         public string is_deleted { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<employee_contact> employee_contact { get; set; }
     }
 }
