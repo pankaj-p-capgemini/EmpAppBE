@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using EmpAppBE.Models;
 using System.Web.Http.Cors;
+using EmpAppBE.Repositories;
 
 namespace EmpAppBE.Controllers
 {
@@ -17,27 +18,30 @@ namespace EmpAppBE.Controllers
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     public class EmployeesController : ApiController
     {
-        private Entities db = new Entities();
+        EmployeeUOW _employeeUOW = new EmployeeUOW();
+
+        private EmpDBEntities db = new EmpDBEntities();
 
         // GET: api/Employees
         [Route("api/v1/employees")]
         public IQueryable<employee> Getemployees()
         {
-            return db.employees;
+            return _employeeUOW.GetAll();
         }
 
         // GET: api/Employees/5
         [Route("api/v1/employees/{id}", Name = "GetEmployeeByID")]
         [ResponseType(typeof(employee))]
-        public IHttpActionResult Getemployee(int id)
+        public employee Getemployee(int id)
         {
-            employee employee = db.employees.Find(id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
+            return _employeeUOW.GetSingle(id);
+            //employee employee = db.employees.Find(id);
+            //if (employee == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return Ok(employee);
+            //return Ok(employee);
         }
 
         // PUT: api/Employees/5

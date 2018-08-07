@@ -5,15 +5,12 @@ using System.Web;
 using EmpAppBE.Models;
 using System.Data;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace EmpAppBE.Repositories
 {
-    public abstract class GenericRepository<Cntx, TEntity> : IMainRepository<TEntity> where TEntity : class where Cntx : DbContext, new()
+    public class GenericRepository<Cntx, TEntity> : IMainRepository<TEntity> where TEntity : class where Cntx : DbContext, new()
     {
-        // https://www.c-sharpcorner.com/UploadFile/b1df45/unit-of-work-in-repository-pattern/
-        // https://www.c-sharpcorner.com/UploadFile/b1df45/getting-started-with-repository-pattern-using-C-Sharp/ 
-        // http://www.tugberkugurlu.com/archive/generic-repository-pattern-entity-framework-asp-net-mvc-and-unit-testing-triangle 
-
         private Cntx _entities = new Cntx();
         public Cntx Context
         {
@@ -21,19 +18,31 @@ namespace EmpAppBE.Repositories
             set { _entities = value; }
         }
 
+        public virtual IQueryable<TEntity> GetAll()
+        {
+            IQueryable<TEntity> query = _entities.Set<TEntity>();
+            return query;
+        }
+
+        public TEntity FindBy(int id)//Expression<Func<TEntity, bool>>  predicate
+        {
+            TEntity query = _entities.Set<TEntity>().Find(id); //.Where(predicate);
+            return query;
+        }
+
         public virtual void Insert(TEntity entity)
         {
             _entities.Set<TEntity>().Add(entity);
         }
 
-        public virtual void Delete(TEntity entity)
-        {
-            _entities.Set<TEntity>().Remove(entity);
-        }
-
         public virtual void Update(TEntity entity)
         {
             _entities.Entry(entity).State = EntityState.Modified;
+        }
+
+        public virtual void Delete(TEntity entity)
+        {
+            _entities.Set<TEntity>().Remove(entity);
         }
 
         public virtual void Save()

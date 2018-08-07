@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EmpDBModelStoreContainer" CdmEntityContainer="Entities">
+  <EntityContainerMapping StorageEntityContainer="EmpDBModelStoreContainer" CdmEntityContainer="EmpDBEntities">
     <EntitySetMapping Name="employees">
       <EntityTypeMapping TypeName="EmpDBModel.employee">
         <MappingFragment StoreEntitySet="employee">
@@ -12,12 +12,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="employee_contact">
-      <EntityTypeMapping TypeName="EmpDBModel.employee_contact">
-        <MappingFragment StoreEntitySet="employee_contact">
+    <EntitySetMapping Name="employee_contacts">
+      <EntityTypeMapping TypeName="EmpDBModel.employee_contacts">
+        <MappingFragment StoreEntitySet="employee_contacts">
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="city" ColumnName="city" />
           <ScalarProperty Name="mobile" ColumnName="mobile" />
           <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="employee_personal_data">
+      <EntityTypeMapping TypeName="EmpDBModel.employee_personal_data">
+        <MappingFragment StoreEntitySet="employee_personal_data">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="religion" ColumnName="religion" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="dob" ColumnName="dob" />
+          <ScalarProperty Name="marital_status" ColumnName="marital_status" />
+          <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="employee_qualifications">
+      <EntityTypeMapping TypeName="EmpDBModel.employee_qualifications">
+        <MappingFragment StoreEntitySet="employee_qualifications">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="qualification" ColumnName="qualification" />
+          <ScalarProperty Name="institution" ColumnName="institution" />
+          <ScalarProperty Name="yop" ColumnName="yop" />
+          <ScalarProperty Name="percentage" ColumnName="percentage" />
           <ScalarProperty Name="emp_id" ColumnName="emp_id" />
         </MappingFragment>
       </EntityTypeMapping>

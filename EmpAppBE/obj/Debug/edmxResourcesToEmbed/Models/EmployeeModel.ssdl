@@ -10,33 +10,92 @@
     <Property Name="department" Type="varchar" MaxLength="30" />
     <Property Name="is_deleted" Type="varchar" MaxLength="1" />
   </EntityType>
-  <EntityType Name="employee_contact">
+  <EntityType Name="employee_contacts">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="state" Type="varchar" MaxLength="35" Nullable="false" />
+    <Property Name="city" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="mobile" Type="nvarchar" MaxLength="15" Nullable="false" />
     <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="emp_id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="FK_employee_contact_employee">
+  <EntityType Name="employee_personal_data">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="religion" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="gender" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="dob" Type="date" Nullable="false" />
+    <Property Name="marital_status" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="emp_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="employee_qualifications">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="qualification" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="institution" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="yop" Type="date" Nullable="false" />
+    <Property Name="percentage" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+    <Property Name="emp_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_employee_contacts_employee">
     <End Role="employee" Type="Self.employee" Multiplicity="1" />
-    <End Role="employee_contact" Type="Self.employee_contact" Multiplicity="*" />
+    <End Role="employee_contacts" Type="Self.employee_contacts" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="employee">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="employee_contact">
+      <Dependent Role="employee_contacts">
+        <PropertyRef Name="emp_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employee_personal_data_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="employee_personal_data" Type="Self.employee_personal_data" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee_personal_data">
+        <PropertyRef Name="emp_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employee_qualifications_employee">
+    <End Role="employee" Type="Self.employee" Multiplicity="1" />
+    <End Role="employee_qualifications" Type="Self.employee_qualifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="employee_qualifications">
         <PropertyRef Name="emp_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="EmpDBModelStoreContainer">
     <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="employee_contact" EntityType="Self.employee_contact" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_employee_contact_employee" Association="Self.FK_employee_contact_employee">
+    <EntitySet Name="employee_contacts" EntityType="Self.employee_contacts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee_personal_data" EntityType="Self.employee_personal_data" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee_qualifications" EntityType="Self.employee_qualifications" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_employee_contacts_employee" Association="Self.FK_employee_contacts_employee">
       <End Role="employee" EntitySet="employee" />
-      <End Role="employee_contact" EntitySet="employee_contact" />
+      <End Role="employee_contacts" EntitySet="employee_contacts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employee_personal_data_employee" Association="Self.FK_employee_personal_data_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="employee_personal_data" EntitySet="employee_personal_data" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employee_qualifications_employee" Association="Self.FK_employee_qualifications_employee">
+      <End Role="employee" EntitySet="employee" />
+      <End Role="employee_qualifications" EntitySet="employee_qualifications" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -17,7 +17,9 @@ namespace EmpAppBE.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public employee()
         {
-            this.employee_contact = new HashSet<employee_contact>();
+            this.employee_contacts = new HashSet<employee_contacts>();
+            this.employee_personal_data = new HashSet<employee_personal_data>();
+            this.employee_qualifications = new HashSet<employee_qualifications>();
         }
     
         public int id { get; set; }
@@ -27,6 +29,10 @@ namespace EmpAppBE.Models
         public string is_deleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employee_contact> employee_contact { get; set; }
+        public virtual ICollection<employee_contacts> employee_contacts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<employee_personal_data> employee_personal_data { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<employee_qualifications> employee_qualifications { get; set; }
     }
 }

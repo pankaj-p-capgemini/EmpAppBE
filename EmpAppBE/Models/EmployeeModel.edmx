@@ -15,33 +15,92 @@
           <Property Name="department" Type="varchar" MaxLength="30" />
           <Property Name="is_deleted" Type="varchar" MaxLength="1" />
         </EntityType>
-        <EntityType Name="employee_contact">
+        <EntityType Name="employee_contacts">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="mobile" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="emp_id" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_employee_contact_employee">
+        <EntityType Name="employee_personal_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="religion" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="dob" Type="date" Nullable="false" />
+          <Property Name="marital_status" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employee_qualifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="qualification" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="institution" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="yop" Type="date" Nullable="false" />
+          <Property Name="percentage" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_employee_contacts_employee">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="employee_contact" Type="Self.employee_contact" Multiplicity="*" />
+          <End Role="employee_contacts" Type="Self.employee_contacts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="employee">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="employee_contact">
+            <Dependent Role="employee_contacts">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_personal_data_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="employee_personal_data" Type="Self.employee_personal_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="employee_personal_data">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_qualifications_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="employee_qualifications" Type="Self.employee_qualifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="employee_qualifications">
               <PropertyRef Name="emp_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EmpDBModelStoreContainer">
           <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="employee_contact" EntityType="Self.employee_contact" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_employee_contact_employee" Association="Self.FK_employee_contact_employee">
+          <EntitySet Name="employee_contacts" EntityType="Self.employee_contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee_personal_data" EntityType="Self.employee_personal_data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee_qualifications" EntityType="Self.employee_qualifications" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_employee_contacts_employee" Association="Self.FK_employee_contacts_employee">
             <End Role="employee" EntitySet="employee" />
-            <End Role="employee_contact" EntitySet="employee_contact" />
+            <End Role="employee_contacts" EntitySet="employee_contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_personal_data_employee" Association="Self.FK_employee_personal_data_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="employee_personal_data" EntitySet="employee_personal_data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_qualifications_employee" Association="Self.FK_employee_qualifications_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="employee_qualifications" EntitySet="employee_qualifications" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -58,36 +117,99 @@
           <Property Name="salary" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="department" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="is_deleted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="employee_contact" Relationship="Self.FK_employee_contact_employee" FromRole="employee" ToRole="employee_contact" />
+          <NavigationProperty Name="employee_contacts" Relationship="Self.FK_employee_contacts_employee" FromRole="employee" ToRole="employee_contacts" />
+          <NavigationProperty Name="employee_personal_data" Relationship="Self.FK_employee_personal_data_employee" FromRole="employee" ToRole="employee_personal_data" />
+          <NavigationProperty Name="employee_qualifications" Relationship="Self.FK_employee_qualifications_employee" FromRole="employee" ToRole="employee_qualifications" />
         </EntityType>
-        <EntityType Name="employee_contact">
+        <EntityType Name="employee_contacts">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="emp_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="employee" Relationship="Self.FK_employee_contact_employee" FromRole="employee_contact" ToRole="employee" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_employee_contacts_employee" FromRole="employee_contacts" ToRole="employee" />
         </EntityType>
-        <Association Name="FK_employee_contact_employee">
+        <EntityType Name="employee_personal_data">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="religion" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="dob" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="marital_status" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_employee_personal_data_employee" FromRole="employee_personal_data" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="employee_qualifications">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="qualification" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="institution" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="yop" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="percentage" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_employee_qualifications_employee" FromRole="employee_qualifications" ToRole="employee" />
+        </EntityType>
+        <Association Name="FK_employee_contacts_employee">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
-          <End Role="employee_contact" Type="Self.employee_contact" Multiplicity="*" />
+          <End Role="employee_contacts" Type="Self.employee_contacts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="employee">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="employee_contact">
+            <Dependent Role="employee_contacts">
               <PropertyRef Name="emp_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK_employee_personal_data_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="employee_personal_data" Type="Self.employee_personal_data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="employee_personal_data">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_qualifications_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="employee_qualifications" Type="Self.employee_qualifications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="employee_qualifications">
+              <PropertyRef Name="emp_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmpDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="employees" EntityType="Self.employee" />
-          <EntitySet Name="employee_contact" EntityType="Self.employee_contact" />
-          <AssociationSet Name="FK_employee_contact_employee" Association="Self.FK_employee_contact_employee">
+          <EntitySet Name="employee_contacts" EntityType="Self.employee_contacts" />
+          <EntitySet Name="employee_personal_data" EntityType="Self.employee_personal_data" />
+          <EntitySet Name="employee_qualifications" EntityType="Self.employee_qualifications" />
+          <AssociationSet Name="FK_employee_contacts_employee" Association="Self.FK_employee_contacts_employee">
             <End Role="employee" EntitySet="employees" />
-            <End Role="employee_contact" EntitySet="employee_contact" />
+            <End Role="employee_contacts" EntitySet="employee_contacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_personal_data_employee" Association="Self.FK_employee_personal_data_employee">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="employee_personal_data" EntitySet="employee_personal_data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_qualifications_employee" Association="Self.FK_employee_qualifications_employee">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="employee_qualifications" EntitySet="employee_qualifications" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -95,7 +217,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EmpDBModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="EmpDBModelStoreContainer" CdmEntityContainer="EmpDBEntities">
           <EntitySetMapping Name="employees">
             <EntityTypeMapping TypeName="EmpDBModel.employee">
               <MappingFragment StoreEntitySet="employee">
@@ -107,12 +229,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="employee_contact">
-            <EntityTypeMapping TypeName="EmpDBModel.employee_contact">
-              <MappingFragment StoreEntitySet="employee_contact">
+          <EntitySetMapping Name="employee_contacts">
+            <EntityTypeMapping TypeName="EmpDBModel.employee_contacts">
+              <MappingFragment StoreEntitySet="employee_contacts">
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
                 <ScalarProperty Name="mobile" ColumnName="mobile" />
                 <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee_personal_data">
+            <EntityTypeMapping TypeName="EmpDBModel.employee_personal_data">
+              <MappingFragment StoreEntitySet="employee_personal_data">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="religion" ColumnName="religion" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="marital_status" ColumnName="marital_status" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee_qualifications">
+            <EntityTypeMapping TypeName="EmpDBModel.employee_qualifications">
+              <MappingFragment StoreEntitySet="employee_qualifications">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="qualification" ColumnName="qualification" />
+                <ScalarProperty Name="institution" ColumnName="institution" />
+                <ScalarProperty Name="yop" ColumnName="yop" />
+                <ScalarProperty Name="percentage" ColumnName="percentage" />
                 <ScalarProperty Name="emp_id" ColumnName="emp_id" />
               </MappingFragment>
             </EntityTypeMapping>
