@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace EmpAppBE.Repositories
 {
-    interface IMainRepository<T> where T : class
+    public interface IMainRepository<T> where T : class
     {
         IQueryable<T> GetAll();
-        T FindBy(int id);
-        void Insert(T entity);
+        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
+        //T FindBy(int id);
+        T Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
         void Save();

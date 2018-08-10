@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace EmpAppBE.Repositories
 {
-    public class GenericRepository<Cntx, TEntity> : IMainRepository<TEntity> where TEntity : class where Cntx : DbContext, new()
+    public abstract class GenericRepository<Cntx, TEntity> : IMainRepository<TEntity> where TEntity : class where Cntx : DbContext, new()
     {
         private Cntx _entities = new Cntx();
         public Cntx Context
@@ -24,15 +24,22 @@ namespace EmpAppBE.Repositories
             return query;
         }
 
-        public TEntity FindBy(int id)//Expression<Func<TEntity, bool>>  predicate
+        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
-            TEntity query = _entities.Set<TEntity>().Find(id); //.Where(predicate);
+            IQueryable<TEntity> query = _entities.Set<TEntity>().Where(predicate);
             return query;
         }
 
-        public virtual void Insert(TEntity entity)
+        //public TEntity FindBy(int id)//Expression<Func<TEntity, bool>>  predicate
+        //{
+        //    TEntity query = _entities.Set<TEntity>().Find(id); //.Where(predicate);
+        //    return query;
+        //}
+
+        public virtual TEntity Insert(TEntity entity)
         {
             _entities.Set<TEntity>().Add(entity);
+            return entity;
         }
 
         public virtual void Update(TEntity entity)

@@ -11,6 +11,8 @@ using System.Web.Http.Description;
 using EmpAppBE.Models;
 using System.Web.Http.Cors;
 using EmpAppBE.Repositories;
+using EmpAppBE.ErrorHelper;
+using EmpAppBE.ActionFilters;
 
 namespace EmpAppBE.Controllers
 {
@@ -34,14 +36,15 @@ namespace EmpAppBE.Controllers
         [ResponseType(typeof(employee))]
         public employee Getemployee(int id)
         {
-            return _employeeUOW.GetSingle(id);
-            //employee employee = db.employees.Find(id);
-            //if (employee == null)
-            //{
-            //    return NotFound();
-            //}
+            if (id > 0)
+            {
+                var employee = _employeeUOW.GetSingle(id);
+                if (employee != null)
+                    return _employeeUOW.GetSingle(id);
 
-            //return Ok(employee);
+                throw new ApiDataException(1001, "No employee found for this id.", HttpStatusCode.NotFound);
+            }
+            throw new ApiException() { ErrorCode = (int)HttpStatusCode.BadRequest, ErrorDescription = "Bad Request..." };
         }
 
         // PUT: api/Employees/5

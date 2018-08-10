@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using EmpAppBE.ActionFilters;
 
 namespace EmpAppBE
 {
@@ -12,6 +13,10 @@ namespace EmpAppBE
             // Web API configuration and services
             // Enabling Cross-Origin Requests (CORS) for WebAPIs
             config.EnableCors();
+
+            // Registering Action Filter (LoggingFilterAttribute) for NLog
+            config.Filters.Add(new LoggingFilterAttribute());
+            config.Filters.Add(new GlobalExceptionAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

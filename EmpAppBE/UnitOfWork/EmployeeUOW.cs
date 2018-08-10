@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using EmpAppBE.Repositories;
-using System.Data.Entity;
 using EmpAppBE.Models;
 
 namespace EmpAppBE.Repositories
 {
     public class EmployeeUOW
     {
-        private IMainRepository<employee> empGenObj = null;
-        GenericRepository<EmpDBEntities, employee> lcEmpGenObj = new GenericRepository<EmpDBEntities, employee>();
+        private EmployeeRepository empGenObj = new EmployeeRepository();
+        private EmployeeRepository empPerObj = new EmployeeRepository();
+        private EmployeeRepository empConObj = new EmployeeRepository();
+        private EmployeeRepository empQuaObj = new EmployeeRepository();
 
-        public EmployeeUOW() {
-            empGenObj = new GenericRepository<EmpDBEntities, employee>();
+        public EmployeeUOW()
+        {
+
         }
 
         public IQueryable<employee> GetAll()
@@ -25,7 +25,7 @@ namespace EmpAppBE.Repositories
 
         public employee GetSingle(int empId)
         {
-            var query = empGenObj.FindBy(empId);
+            var query = empGenObj.GetSingle(empId);
             return query;
         }
 

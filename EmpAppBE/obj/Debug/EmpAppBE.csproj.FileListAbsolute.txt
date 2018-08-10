@@ -62,6 +62,7 @@ C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Microsoft.AspNet.TelemetryC
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Newtonsoft.Json.dll
+C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\NLog.dll
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\System.Diagnostics.DiagnosticSource.dll
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\System.Net.Http.Formatting.dll
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\System.Web.Cors.dll
@@ -83,6 +84,7 @@ C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Microsoft.AI.Web.xml
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\Newtonsoft.Json.xml
+C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\NLog.xml
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\System.Diagnostics.DiagnosticSource.xml
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\System.Net.Http.Formatting.xml
 C:\Users\papandey\source\repos\EmpAppBE\EmpAppBE\bin\System.Web.Helpers.xml
